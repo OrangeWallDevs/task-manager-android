@@ -1,7 +1,6 @@
 package dev.orangewall.taskmanager
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.orangewall.taskmanager.data.task.Task
@@ -14,7 +13,6 @@ import org.junit.runner.RunWith
 import org.robolectric.shadows.ShadowLog
 import java.util.Date
 import java.util.UUID
-import kotlin.jvm.Throws
 
 @RunWith(AndroidJUnit4::class)
 class TaskListTests {
