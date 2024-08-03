@@ -17,6 +17,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import dev.orangewall.taskmanager.R
 import dev.orangewall.taskmanager.data.task.Task
+import dev.orangewall.taskmanager.util.formatDateToISO
 
 @Composable
 fun TaskListScreen(
@@ -60,6 +61,7 @@ fun TaskList(tasks: List<Task>, completeTask: (taskId: String) -> Unit, modifier
                         onCheckedChange = { completeTask(task.id) }
                     )
                     Text(text = task.title)
+                    Text(text = formatDateToISO(task.dueDate))
                 }
             }
         }

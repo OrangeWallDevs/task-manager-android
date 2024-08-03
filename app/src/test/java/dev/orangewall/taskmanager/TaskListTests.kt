@@ -23,6 +23,7 @@ import androidx.compose.ui.test.printToLog
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.orangewall.taskmanager.data.task.Task
 import dev.orangewall.taskmanager.ui.task.TaskListViewModel
+import dev.orangewall.taskmanager.util.formatDateToISO
 import io.github.serpro69.kfaker.Faker
 import org.junit.Before
 import org.junit.Rule
@@ -79,7 +80,8 @@ class TaskListTests {
         for (index in tasks.indices) {
             val task = tasks[index]
             val taskNode = taskNodes[index]
-            taskNode.onChildren().assertAny(hasText(task.title))
+            taskNode.onChildren().assertAny(hasText(task.title, true, true))
+            taskNode.onChildren().assertAny(hasText(formatDateToISO(task.dueDate), true, true))
             taskNode.onChildren().filter(isToggleable()).assertAny(if (task.isCompleted) isOn() else isOff())
         }
     }
