@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import dev.orangewall.taskmanager.R
 import dev.orangewall.taskmanager.data.task.Task
@@ -33,20 +36,29 @@ fun TaskListScreen(
                     bottom = 16.dp,
                 )
         ) {
-            TaskList(tasks = viewModel.tasks)
+            TaskList(tasks = viewModel.tasks, completeTask = viewModel::toggleTaskCompletion)
         }
     }
 }
 
 @Composable
-fun TaskList(tasks: List<Task>, modifier: Modifier = Modifier) {
+fun TaskList(tasks: List<Task>, completeTask: (taskId: String) -> Unit, modifier: Modifier = Modifier) {
+    val taskItemContentDescription = stringResource(id = R.string.task_item)
     if (tasks.isEmpty()) {
         Text(text = stringResource(id = R.string.no_tasks))
     }
     else {
         LazyColumn(modifier = modifier) {
             items(tasks) { task ->
-                Row {
+                Row (
+                    modifier = Modifier.semantics {
+                        contentDescription = taskItemContentDescription
+                    }
+                ) {
+                    Checkbox(
+                        checked = task.isCompleted,
+                        onCheckedChange = { completeTask(task.id) }
+                    )
                     Text(text = task.title)
                 }
             }

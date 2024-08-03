@@ -1,7 +1,25 @@
 package dev.orangewall.taskmanager
 
+import androidx.compose.ui.test.assertAny
+import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.filter
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isNotSelected
+import androidx.compose.ui.test.isOff
+import androidx.compose.ui.test.isOn
+import androidx.compose.ui.test.isSelected
+import androidx.compose.ui.test.isToggleable
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithContentDescription
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onChild
+import androidx.compose.ui.test.onChildren
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.onSibling
+import androidx.compose.ui.test.onSiblings
+import androidx.compose.ui.test.printToLog
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.orangewall.taskmanager.data.task.Task
 import dev.orangewall.taskmanager.ui.task.TaskListViewModel
@@ -55,8 +73,14 @@ class TaskListTests {
                 taskListViewModel.addTask(task)
             }
         }
-        tasks.forEach { task ->
-            composeTestRule.onNodeWithText(task.title).assertExists()
+
+        val taskItemContentDescription = composeTestRule.activity.getString(R.string.task_item)
+        val taskNodes = composeTestRule.onAllNodesWithContentDescription(taskItemContentDescription);
+        for (index in tasks.indices) {
+            val task = tasks[index]
+            val taskNode = taskNodes[index]
+            taskNode.onChildren().assertAny(hasText(task.title))
+            taskNode.onChildren().filter(isToggleable()).assertAny(if (task.isCompleted) isOn() else isOff())
         }
     }
 }

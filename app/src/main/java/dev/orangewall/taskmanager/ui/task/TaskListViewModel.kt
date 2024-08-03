@@ -11,4 +11,17 @@ class TaskListViewModel : ViewModel() {
     fun addTask(task: Task) {
         _tasks.add(task)
     }
+
+    fun toggleTaskCompletion(taskId: String) {
+        val task = _tasks.find { it.id == taskId } ?: return
+        val updatedTask = Task(
+            id = task.id,
+            title = task.title,
+            description = task.description,
+            createdDate = task.createdDate,
+            dueDate = task.dueDate,
+            isCompleted = !task.isCompleted
+        )
+        _tasks[_tasks.indexOf(task)] = updatedTask
+    }
 }
