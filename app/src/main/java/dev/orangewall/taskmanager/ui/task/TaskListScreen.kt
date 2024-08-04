@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.orangewall.taskmanager.R
 import dev.orangewall.taskmanager.data.task.Task
@@ -24,11 +25,11 @@ fun TaskListScreen(
     viewModel: TaskListViewModel,
     modifier: Modifier = Modifier,
 ) {
-    Column (
+    Column(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
@@ -43,15 +44,18 @@ fun TaskListScreen(
 }
 
 @Composable
-fun TaskList(tasks: List<Task>, completeTask: (taskId: String) -> Unit, modifier: Modifier = Modifier) {
+fun TaskList(
+    tasks: List<Task>,
+    completeTask: (taskId: String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val taskItemContentDescription = stringResource(id = R.string.task_item)
     if (tasks.isEmpty()) {
         Text(text = stringResource(id = R.string.no_tasks))
-    }
-    else {
+    } else {
         LazyColumn(modifier = modifier) {
             items(tasks) { task ->
-                Row (
+                Row(
                     modifier = Modifier.semantics {
                         contentDescription = taskItemContentDescription
                     }
@@ -60,7 +64,8 @@ fun TaskList(tasks: List<Task>, completeTask: (taskId: String) -> Unit, modifier
                         checked = task.isCompleted,
                         onCheckedChange = { completeTask(task.id) }
                     )
-                    Text(text = task.title)
+                    Text(text = task.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(text = task.description, maxLines = 2, overflow = TextOverflow.Ellipsis)
                     Text(text = formatDateToISO(task.dueDate))
                 }
             }

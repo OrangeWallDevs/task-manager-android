@@ -76,13 +76,30 @@ class TaskListTests {
         }
 
         val taskItemContentDescription = composeTestRule.activity.getString(R.string.task_item)
-        val taskNodes = composeTestRule.onAllNodesWithContentDescription(taskItemContentDescription);
+        val taskNodes =
+            composeTestRule.onAllNodesWithContentDescription(taskItemContentDescription);
         for (index in tasks.indices) {
             val task = tasks[index]
             val taskNode = taskNodes[index]
-            taskNode.onChildren().assertAny(hasText(task.title, true, true))
-            taskNode.onChildren().assertAny(hasText(formatDateToISO(task.dueDate), true, true))
-            taskNode.onChildren().filter(isToggleable()).assertAny(if (task.isCompleted) isOn() else isOff())
+            taskNode.onChildren().assertAny(
+                hasText(
+                    text = task.title, substring = true, ignoreCase = true
+                )
+            )
+            taskNode.onChildren().assertAny(
+                hasText(
+                    text = task.description, substring = true, ignoreCase = true
+                )
+            )
+            taskNode.onChildren().assertAny(
+                hasText(
+                    formatDateToISO(task.dueDate),
+                    substring = true,
+                    ignoreCase = true
+                )
+            )
+            taskNode.onChildren().filter(isToggleable())
+                .assertAny(if (task.isCompleted) isOn() else isOff())
         }
     }
 }
