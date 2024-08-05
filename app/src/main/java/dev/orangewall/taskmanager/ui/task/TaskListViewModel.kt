@@ -5,11 +5,16 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.orangewall.taskmanager.data.task.Task
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @HiltViewModel
 class TaskListViewModel @Inject constructor() : ViewModel() {
     private val _tasks = mutableStateListOf<Task>()
     val tasks: List<Task> get() = _tasks
+
+    fun addTasks(tasks: List<Task>) {
+        _tasks.addAll(tasks)
+    }
 
     fun addTask(task: Task) {
         _tasks.add(task)

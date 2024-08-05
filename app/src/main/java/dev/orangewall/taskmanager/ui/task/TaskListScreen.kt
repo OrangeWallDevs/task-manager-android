@@ -8,8 +8,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -23,23 +26,25 @@ import dev.orangewall.taskmanager.util.formatDateToISO
 
 @Composable
 fun TaskListScreen(
+    onNavigateToTaskCreation: () -> Unit,
     viewModel: TaskListViewModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
+            .fillMaxSize()
+            .padding(
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 16.dp,
+            )
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp,
-                )
+        TaskList(tasks = viewModel.tasks, completeTask = viewModel::toggleTaskCompletion)
+        FloatingActionButton(
+            onClick = { onNavigateToTaskCreation() },
+            modifier = Modifier.align(Alignment.End)
         ) {
-            TaskList(tasks = viewModel.tasks, completeTask = viewModel::toggleTaskCompletion)
+            Text(text = stringResource(id = R.string.add_task))
         }
     }
 }
@@ -54,7 +59,10 @@ fun TaskList(
     if (tasks.isEmpty()) {
         Text(text = stringResource(id = R.string.no_tasks))
     } else {
-        LazyColumn(modifier = modifier) {
+        LazyColumn(
+            modifier = modifier
+                .fillMaxWidth()
+        ) {
             items(tasks) { task ->
                 Row(
                     modifier = Modifier.semantics {
@@ -65,10 +73,22 @@ fun TaskList(
                         checked = task.isCompleted,
                         onCheckedChange = { completeTask(task.id) }
                     )
-                    Text(text = task.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    Text(text = task.description, maxLines = 2, overflow = TextOverflow.Ellipsis)
-                    Text(text = formatDateToISO(task.dueDate))
+                    Column {
+                        Text(text = task.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(
+                            text = task.description,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                    Column {
+                        Text(
+                            text = formatDateToISO(task.dueDate),
+                            modifier = Modifier.align(Alignment.End)
+                        )
+                    }
                 }
+                HorizontalDivider()
             }
         }
     }
