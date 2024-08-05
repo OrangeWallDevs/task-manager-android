@@ -2,4 +2,9 @@
     <string name="app_name">Task Manager</string>
     <string name="no_tasks">No tasks added yet</string>
     <string name="task_item">Task item</string>
+    <string name="add_task">Add task</string>
+    <string name="task_title_field">Task title</string>
+    <string name="task_description_field">Task description</string>
+    <string name="task_due_date_field">Due date</string>
+    <string name="save_task_button">Save</string>
 </resources>

@@ -35,8 +35,6 @@ import java.util.UUID
 
 @RunWith(AndroidJUnit4::class)
 class TaskListTests {
-
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 

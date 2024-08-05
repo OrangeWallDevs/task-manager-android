@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import dev.orangewall.taskmanager.navigation.NavGraph
 import dev.orangewall.taskmanager.ui.task.TaskListScreen
 import dev.orangewall.taskmanager.ui.theme.TaskManagerTheme
 
@@ -21,8 +23,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             TaskManagerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TaskListScreen(
-                        viewModel = appContainer.taskListViewModel,
+                    NavGraph(
+                        navController = rememberNavController(),
+                        taskListViewModel = appContainer.taskListViewModel,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

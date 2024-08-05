@@ -69,6 +69,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.fragment.ktx)
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.faker)
     testImplementation(libs.robolectric)
