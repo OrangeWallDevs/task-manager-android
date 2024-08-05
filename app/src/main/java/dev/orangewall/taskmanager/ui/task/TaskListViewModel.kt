@@ -2,9 +2,12 @@ package dev.orangewall.taskmanager.ui.task
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.orangewall.taskmanager.data.task.Task
+import javax.inject.Inject
 
-class TaskListViewModel : ViewModel() {
+@HiltViewModel
+class TaskListViewModel @Inject constructor() : ViewModel() {
     private val _tasks = mutableStateListOf<Task>()
     val tasks: List<Task> get() = _tasks
 

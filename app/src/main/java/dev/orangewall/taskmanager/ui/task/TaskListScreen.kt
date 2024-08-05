@@ -20,6 +20,7 @@ import dev.orangewall.taskmanager.R
 import dev.orangewall.taskmanager.data.task.Task
 import dev.orangewall.taskmanager.util.formatDateToISO
 
+
 @Composable
 fun TaskListScreen(
     viewModel: TaskListViewModel,

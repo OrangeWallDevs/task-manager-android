@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.hilt.android)
+    id("kotlin-kapt")
 }
 
 android {
@@ -19,6 +21,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
     }
 
     buildTypes {
@@ -71,6 +74,8 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.faker)
     testImplementation(libs.robolectric)
@@ -79,4 +84,10 @@ dependencies {
     testImplementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    kapt(libs.hilt.android.compiler)
+    annotationProcessor(libs.hilt.android.compiler)
+}
+
+kapt {
+    correctErrorTypes = true
 }
