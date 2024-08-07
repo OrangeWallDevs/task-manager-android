@@ -4,8 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import dev.orangewall.taskmanager.data.task.Task
 import dev.orangewall.taskmanager.ui.components.DatePickerModal
+import dev.orangewall.taskmanager.ui.theme.TaskManagerTheme
 import dev.orangewall.taskmanager.util.formatDateToISO
 import java.util.Date
 import java.util.UUID
@@ -34,10 +39,23 @@ fun TaskCreationScreen(
 
     Column(
         modifier = modifier
-            .background(color = Color.White)
     ) {
-        OutlinedTextField(value = taskTitle, onValueChange = { taskTitle = it })
-        OutlinedTextField(value = taskDescription, onValueChange = { taskDescription = it })
+        OutlinedTextField(
+            value = taskTitle,
+            onValueChange = { taskTitle = it },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.secondary
+            )
+        )
+        OutlinedTextField(
+            value = taskDescription,
+            onValueChange = { taskDescription = it },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.secondary
+            )
+        )
         Row {
             if (taskDueDate != null) {
                 val date = Date(taskDueDate!!)
@@ -75,8 +93,9 @@ fun TaskCreationScreen(
                 )
                 onNavigateToTaskList()
             }
-        }) {
-            Text("Add Task")
+        },
+            colors = ButtonDefaults.buttonColors()) {
+            Text("Add Task", color = MaterialTheme.colorScheme.onPrimary)
         }
     }
 }
